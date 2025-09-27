@@ -1,0 +1,29 @@
+[project]
+name = "financial-analyzer"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Preet Panchal",email = "pbpanchal04@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pandas (>=2.3.2,<3.0.0)",
+    "yfinance (>=0.2.66,<0.3.0)",
+    "pydantic (>=2.11.9,<3.0.0)",
+    "typer[all] (>=0.19.2,<0.20.0)",
+    "sqlalchemy (>=2.0.43,<3.0.0)",
+    "pyyaml (>=6.0.3,<7.0.0)"
+]
+
+[tool.poetry]
+packages = [{include = "financial_analyzer", from = "src"}]
+
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.13.2"
+pytest = "^8.4.2"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
