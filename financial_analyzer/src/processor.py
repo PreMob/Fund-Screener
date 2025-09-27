@@ -41,6 +41,13 @@ def _prices_to_df(prices: list[OHLCV]) -> pd.DataFrame:
     """Convert OHLCV Pydantic models → pandas DataFrame"""
     df = pd.DataFrame([p.model_dump() for p in prices])
     df.set_index("date", inplace=True)
+    
+    # Convert Decimal columns to float to avoid type mixing issues
+    decimal_cols = ["open", "high", "low", "close"]
+    for col in decimal_cols:
+        if col in df.columns:
+            df[col] = df[col].astype(float)
+    
     return df
 
 
@@ -51,6 +58,13 @@ def _fundamentals_to_df(fundamentals: list[Fundamentals]) -> pd.DataFrame:
     
     df = pd.DataFrame([f.model_dump() for f in fundamentals])
     df.set_index("report_date", inplace=True)
+    
+    # Convert Decimal columns to float to avoid type mixing issues
+    decimal_cols = ["total_assets", "total_liabilities", "book_value", "revenue"]
+    for col in decimal_cols:
+        if col in df.columns:
+            df[col] = df[col].astype(float)
+    
     return df
 
 
@@ -68,6 +82,12 @@ def _merge_data(prices_df: pd.DataFrame, fundamentals_df: pd.DataFrame) -> pd.Da
         prices_df.index = pd.to_datetime(prices_df.index)
     if not isinstance(fundamentals_df.index, pd.DatetimeIndex):
         fundamentals_df.index = pd.to_datetime(fundamentals_df.index)
+    
+    # Convert both indices to timezone-naive to avoid dtype mismatch
+    if prices_df.index.tz is not None:
+        prices_df.index = prices_df.index.tz_localize(None)
+    if fundamentals_df.index.tz is not None:
+        fundamentals_df.index = fundamentals_df.index.tz_localize(None)
     
     prices_df = prices_df.sort_index()
     fundamentals_df = fundamentals_df.sort_index()

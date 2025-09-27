@@ -1,7 +1,7 @@
-from pydantic import BaseModel, Field , field_validator
+from pydantic import BaseModel, Field, field_validator, ValidationInfo
 from datetime import datetime
 from decimal import Decimal
-from typing import Optional, Literal , List
+from typing import Optional, Literal, List
 
 class OHLCV(BaseModel):
     date: datetime
@@ -12,8 +12,9 @@ class OHLCV(BaseModel):
     volume: int
 
     @field_validator("high")
-    def high_greater_than_low(cls, v, values):
-        if "low" in values and v < values["low"]:
+    @classmethod
+    def high_greater_than_low(cls, v, info: ValidationInfo):
+        if info.data and "low" in info.data and v < info.data["low"]:
             raise ValueError("High price must be >= Low price")
         return v
     

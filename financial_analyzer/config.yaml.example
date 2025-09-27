@@ -1,0 +1,14 @@
+# Configuration file for Financial Analyzer
+# Copy this to config.yaml and modify as needed
+
+database:
+  path: "sqlite:///financial_data.db"
+  # For PostgreSQL: "postgresql://user:password@host:port/database"
+  # For MySQL: "mysql://user:password@host:port/database"
+
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+
+data_settings:
+  historical_period: "5y"  # 1y, 2y, 5y, max
+  min_trading_days_for_sma: 200
