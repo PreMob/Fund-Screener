@@ -11,11 +11,9 @@ from .signals import detect_signals
 from .database import init_db, save_complete_data, validate_data_integrity
 from .models import ExportSchema
 
-# Load configuration
 config = load_config()
 db_url = get_database_url(config)
 
-# Configure logging
 logging.basicConfig(level=get_logging_level(config))
 logger = logging.getLogger(__name__)
 

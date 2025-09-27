@@ -217,7 +217,6 @@ class TestFundamentalRatios:
         
         result_df = _add_fundamental_ratios(df)
         
-        # Should handle exceptions gracefully and set values to None
         assert 'book_value_per_share' in result_df.columns
         assert 'price_to_book' in result_df.columns
         assert 'enterprise_value' in result_df.columns
@@ -241,11 +240,9 @@ class TestIntegratedCalculations:
             'total_liabilities': [800] * 100
         }, index=dates)
         
-        # Apply both functions
         df = _add_technical_indicators(df)
         df = _add_fundamental_ratios(df)
         
-        # Check all indicators are present
         expected_columns = [
             'sma_50', 'sma_200', 'week52_high', 'pct_from_high',
             'book_value_per_share', 'price_to_book', 'enterprise_value'
@@ -254,7 +251,6 @@ class TestIntegratedCalculations:
         for col in expected_columns:
             assert col in df.columns
         
-        # Verify some calculations
         assert df['sma_50'].iloc[99] == 174.5  # Average of 150-199
         assert df['price_to_book'].iloc[0] == 2.0  # 100/50
         assert df['enterprise_value'].iloc[0] == 800

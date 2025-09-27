@@ -181,7 +181,6 @@ class TestSignalDetection:
         
         signals = detect_signals(df, "TEST")
         
-        # Should detect both golden cross and death cross
         assert len(signals) >= 2
         signal_types = [s.signal_type for s in signals]
         assert "golden_cross" in signal_types
@@ -205,7 +204,6 @@ class TestSignalDetection:
         
         signals = detect_signals(df, "TEST")
         
-        # Should still work with minimal data
         assert len(signals) >= 0
 
 
@@ -251,7 +249,6 @@ class TestSignalEventValidation:
         
         golden_signals = detect_golden_crossover(df, "TEST")
         
-        # Verify signals are in chronological order
         if len(golden_signals) > 1:
             for i in range(1, len(golden_signals)):
                 assert golden_signals[i].event_date >= golden_signals[i-1].event_date
@@ -283,7 +280,6 @@ class TestEdgeCases:
         }, index=dates)
         
         signals = detect_golden_crossover(df, "TEST")
-        # Should handle NaN values gracefully
         assert isinstance(signals, list)
     
     def test_single_row_dataframe(self):
@@ -297,5 +293,4 @@ class TestEdgeCases:
         }, index=dates)
         
         signals = detect_signals(df, "TEST")
-        # Cannot detect crossover with single data point
         assert len(signals) == 0
