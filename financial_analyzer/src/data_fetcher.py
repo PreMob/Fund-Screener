@@ -5,7 +5,7 @@ from datetime import datetime
 from decimal import Decimal
 from typing import List, Dict, Any, Optional
 from pydantic import ValidationError
-from models import OHLCV, Fundamentals
+from .models import OHLCV, Fundamentals
 
 logger = logging.getLogger(__name__)
 
