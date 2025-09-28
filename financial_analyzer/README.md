@@ -57,7 +57,7 @@ data_settings:
 python -m src.main analyze NVDA
 
 # With JSON export
-python -m src.main analyze AAPL --output exports/aapl_analysis.json
+python -m src.main analyze AAPL --output output/APPL-output.json
 
 # Custom database
 python -m src.main analyze TSLA --db sqlite:///custom.db
@@ -76,7 +76,7 @@ python -m src.main validate-db
 ```bash
 # Analyze multiple tickers
 for ticker in NVDA AAPL MSFT GOOGL; do
-    python -m src.main analyze $ticker --output exports/${ticker}_analysis.json
+    python -m src.main analyze $ticker --output output/${ticker}-output.json
 done
 ```
 
